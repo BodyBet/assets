@@ -18,26 +18,26 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Checkout bodybet-assets
+    - name: Checkout assets
       uses: actions/checkout@v4
       with:
-        repository: bodybet/bodybet-assets
+        repository: bodybet/assets
         ref: main
-        path: .bodybet-assets
+        path: .assets
 
     - uses: actions/setup-node@v4
       with:
         node-version: 22
 
-    - name: Install bodybet-assets deps
+    - name: Install assets deps
       shell: bash
-      working-directory: .bodybet-assets
+      working-directory: .assets
       run: npm ci --omit=dev
 
     - name: Run upload script
       shell: bash
       run: |
-        node .bodybet-assets/scripts/upload-assets-to-blob.mjs \
+        node .assets/scripts/upload-assets-to-blob.mjs \
           --source "${{ github.workspace }}/${{ inputs.source }}" \
           --prefix "${{ inputs.prefix }}" \
           --manifest-scope "${{ inputs.manifest-scope }}"
