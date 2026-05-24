@@ -1,0 +1,30 @@
+{
+  "name": "bodybet-assets",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Public asset delivery for BodyBet — serves files from Vercel Blob at https://assets.bodybet.eu",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "next dev -p 3010",
+    "build": "next build",
+    "start": "next start",
+    "test": "node --experimental-strip-types --test lib/path-validation.test.ts lib/manifest-key.test.ts",
+    "typecheck": "tsc --noEmit",
+    "upload": "node scripts/upload-assets-to-blob.mjs",
+    "manifest:regenerate": "node scripts/generate-scoped-manifest.mjs"
+  },
+  "dependencies": {
+    "@vercel/blob": "^1.0.0",
+    "next": "^16.2.4",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.17",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "5.9.3"
+  }
+}

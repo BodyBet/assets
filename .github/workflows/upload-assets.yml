@@ -1,0 +1,37 @@
+name: Upload central assets
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'assets/**'
+      - 'scripts/**'
+      - '.github/workflows/upload-assets.yml'
+  workflow_dispatch:
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    env:
+      BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci --omit=dev
+
+      - name: Upload email assets
+        run: node scripts/upload-assets-to-blob.mjs --source assets/email --prefix email --manifest-scope email
+
+      - name: Upload brand assets
+        run: node scripts/upload-assets-to-blob.mjs --source assets/brand --prefix brand --manifest-scope brand
+
+      - name: Upload shared assets
+        run: node scripts/upload-assets-to-blob.mjs --source assets/shared --prefix shared --manifest-scope shared
+
+      - name: Upload og assets
+        run: node scripts/upload-assets-to-blob.mjs --source assets/og --prefix og --manifest-scope og
