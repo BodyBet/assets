@@ -55,6 +55,7 @@ export async function generateScopedManifest({ prefix, manifestScope, token }) {
   const result = await put(manifestPathname, JSON.stringify(manifest, null, 2), {
     access: 'public',
     addRandomSuffix: false,
+    allowOverwrite: true,
     contentType: 'application/json',
     token,
   });
